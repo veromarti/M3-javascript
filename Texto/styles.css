@@ -1,0 +1,13 @@
+.container-init{
+    border: solid red;
+    border-radius: 20px;
+    padding: 10px;
+    margin: 30px;
+}
+
+.container{
+    border: double antiquewhite;
+    border-radius: 20px;
+    padding: 10px;
+    margin: 30px;
+}
