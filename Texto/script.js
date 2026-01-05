@@ -1,10 +1,15 @@
 const txt1 = 'Las llamas son bonitas porque no tienen orden';
 const txt2 = 'Y el fuego es bonito porque todo lo rompe';
 let stat = false;
+let formStat = 'empty'
 
 const container = document.getElementById('my-section');
 const title = document.getElementById('my-title');
 const albumList = document.getElementById('my-list');
+
+const myForm = document.getElementById('my-form');
+const inputName = document.getElementById('my-name');
+const message = document.getElementById('msg');
 
 function render() {
     if (stat) {
@@ -27,6 +32,38 @@ function updateList(items) {
         albumList.appendChild(li);
     });
 }
+
+function validateName(nameValue){
+    if (nameValue.trim() === '') {
+        return 'empty';
+    }
+
+    if (nameValue.length < 3) {
+        return 'error';
+    }
+
+    return 'success';
+}
+
+function renderForm() {
+    message.className = '';
+
+    if (formStat === 'empty') {
+        message.textContent = 'El campo está vacío';
+        message.classList.add('msg-empty');
+    }
+
+    if (formStat === 'error') {
+        message.textContent = 'El nombre debe tener al menos 3 caracteres';
+        message.classList.add('msg-error');
+    }
+
+    if (formStat === 'success') {
+        message.textContent = `Hola, ${inputName.value}`;
+        message.classList.add('msg-success');
+    }
+}
+
 
 window.onload = () =>{
     const btn = document.getElementById('change-text');
@@ -51,6 +88,14 @@ window.onload = () =>{
         stat = !stat; // cambio de estado
         render();       // reflejar estado en el DOM
     });
-    
+
+
+    myForm.addEventListener('submit', (event) => {
+    event.preventDefault(); // evita recarga
+
+    const value = inputName.value;
+    formStat = validateName(value);
+    renderForm();
+    });
 
 }
